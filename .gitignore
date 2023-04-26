@@ -259,3 +259,9 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/seanxs_sfo/sdv
+/seanxs_sfo/smvstats.txt
+/seanxs_sfo/seanxs_sfo.DVL.XML
+/seanxs_sfo/sdv-user.sdv
+/seanxs_sfo/SDV-default.xml
+/seanxs_sfo/runsdvui.cmd
