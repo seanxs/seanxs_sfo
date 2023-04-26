@@ -5,6 +5,10 @@
 #include "Trace.h"
 #include "OpCreate.tmh"
 
+#ifdef ALLOC_PRAGMA
+#pragma alloc_text(PAGE, OpPreCreateOperation)
+#endif
+
 HANDLE ProcessFileTest = NULL;
 
 /*************************************************************************

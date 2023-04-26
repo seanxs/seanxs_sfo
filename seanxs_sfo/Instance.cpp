@@ -115,6 +115,8 @@ Return Value:
 	UNICODE_STRING VolumeName = { 0 };
 	NTSTATUS sts = STATUS_UNSUCCESSFUL;
 
+	PAGED_CODE();
+
 	do
 	{
 		sts = FsFltAllocUnicodeString((USHORT)256, PagedPool, &VolumeName);
@@ -174,6 +176,8 @@ Return Value:
 {
 	UNICODE_STRING VolumeName = { 0 };
 	NTSTATUS sts = STATUS_UNSUCCESSFUL;
+
+	PAGED_CODE();
 
 	do
 	{

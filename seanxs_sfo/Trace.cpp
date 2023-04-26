@@ -1,5 +1,10 @@
 #include "Trace.h"
 
+#ifdef ALLOC_PRAGMA
+#pragma alloc_text(PAGE, UnRegEtw)
+#pragma alloc_text(PAGE, RegEtw)
+#endif
+
 NTSTATUS RegEtw(OUT PREGHANDLE phEtw)
 {
 	PAGED_CODE();

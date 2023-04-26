@@ -5,6 +5,10 @@
 #include "Trace.h"
 #include "OpClose.tmh"
 
+#ifdef ALLOC_PRAGMA
+#pragma alloc_text(PAGE, OpPreCloseOperation)
+#endif
+
 FLT_PREOP_CALLBACK_STATUS
 OpPreCloseOperation(
 	_Inout_ PFLT_CALLBACK_DATA Data,

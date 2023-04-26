@@ -131,6 +131,8 @@
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
     <TimeStampServer>http://timestamp.globalsign.com/scripts/timstamp.dll</TimeStampServer>
     <GenerateManifest>false</GenerateManifest>
+    <CodeAnalysisRuleSet>..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\CodeAnalysis\DriverRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
@@ -168,6 +170,7 @@
       <WppTraceFunction>DoTraceLevelMessage(LEVEL,FLAGS,MSG,...)</WppTraceFunction>
       <WppMinimalRebuildFromTracking>false</WppMinimalRebuildFromTracking>
       <PreprocessorDefinitions>EVENT_TRACING;_WIN64;_AMD64_;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4996;4748;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <MessageCompile>
       <GenerateKernelModeLoggingMacros>true</GenerateKernelModeLoggingMacros>
