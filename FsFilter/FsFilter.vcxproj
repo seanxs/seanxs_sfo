@@ -190,8 +190,17 @@
       <AdditionalDependencies>fltmgr.lib;libcntpr.lib;Netio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <DisableSpecificWarnings>4996;4603;4627;4986;4987;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4305;4996;4603;4627;4986;4987;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <WppGenerateUsingTemplateFile>
+      </WppGenerateUsingTemplateFile>
+      <WppTraceFunction>DoTraceLevelMessage(LEVEL,FLAGS,MSG,...)</WppTraceFunction>
+      <WppEnabled>true</WppEnabled>
+      <PreprocessorDefinitions>EVENT_TRACING;_WIN64;_AMD64_;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WppScanConfigurationData>$(ProjectDir)FsCommon\Trace.h</WppScanConfigurationData>
     </ClCompile>
+    <DriverSign>
+      <FileDigestAlgorithm>SHA256</FileDigestAlgorithm>
+    </DriverSign>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>

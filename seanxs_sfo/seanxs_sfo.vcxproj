@@ -84,6 +84,7 @@
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
     <ConfigurationType>Driver</ConfigurationType>
     <DriverType>WDM</DriverType>
+    <DriverTargetPlatform>Desktop</DriverTargetPlatform>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <TargetVersion>Windows10</TargetVersion>
@@ -196,6 +197,16 @@
     <MessageCompile>
       <GenerateMofFile>true</GenerateMofFile>
     </MessageCompile>
+    <ClCompile>
+      <WppEnabled>true</WppEnabled>
+      <WppTraceFunction>DoTraceLevelMessage(LEVEL,FLAGS,MSG,...)</WppTraceFunction>
+      <WppScanConfigurationData>Trace.h</WppScanConfigurationData>
+      <PreprocessorDefinitions>EVENT_TRACING;_WIN64;_AMD64_;AMD64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4305;4996;4603;4627;4986;4987;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <DriverSign>
+      <FileDigestAlgorithm>SHA256</FileDigestAlgorithm>
+    </DriverSign>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>

@@ -48,6 +48,12 @@
     <ClCompile Include="OpCleanUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpQueryInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpSetInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpCreate.h">
@@ -72,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpCleanUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpQueryInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpSetInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
