@@ -38,7 +38,7 @@ OpPreCloseOperation(
 			break;
 		}
 
-		sts = GetParsedNameInfo(Data, &pNameInfo);
+		/*sts = GetParsedNameInfo(Data, &pNameInfo);
 		if (!NT_SUCCESS(sts))
 		{
 			TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLOSE,
@@ -57,9 +57,15 @@ OpPreCloseOperation(
 			"%!FILE!,%!FUNC!,%!LINE! => File Name : %wZ, TargetFileObject : %p, TargetInstance : %p\n",
 			&pNameInfo->Name,
 			FltObjects->FileObject,
+			Data->Iopb->TargetInstance);*/
+
+		TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLOSE,
+			"%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p\n",
+			FltObjects->FileObject,
 			Data->Iopb->TargetInstance);
 
-		ReturnValue = FLT_PREOP_SUCCESS_WITH_CALLBACK;
+		sts = STATUS_SUCCESS;
+		ReturnValue = FLT_PREOP_COMPLETE;
 	} while (0);
 
 	if (!NT_SUCCESS(sts))

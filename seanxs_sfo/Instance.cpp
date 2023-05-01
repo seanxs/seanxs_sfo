@@ -11,8 +11,10 @@
 #pragma alloc_text(PAGE, seanxssfoInstanceTeardownComplete)
 #endif
 
+EXTERN_C_START
 PFLT_INSTANCE SrcInstance = NULL;
 PFLT_INSTANCE DestInstance = NULL;
+EXTERN_C_END
 
 #define SRC_VOLUME_NAME L"\\Device\\HarddiskVolume7"
 #define DEST_VOLUME_NAME L"\\Device\\HarddiskVolume10"

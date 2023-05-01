@@ -15,7 +15,7 @@
 #define PTDBG_TRACE_REDIRECT_STATUS    0x00000004
 
 #define SRC_PATH_NAME L"\\Device\\HarddiskVolume7\\seanxs_sfo_redirectout"
-#define DEST_PATH_NAME L"\\Device\\HarddiskVolume7\\seanxs_sfo_redirectin"
+#define DEST_PATH_NAME L"\\Device\\HarddiskVolume10\\seanxs_sfo_redirectin"
 
 #if DBG
 #define PT_DBG_PRINT( _dbgLevel, _string )          \

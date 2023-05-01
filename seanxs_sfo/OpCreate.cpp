@@ -9,7 +9,7 @@
 #pragma alloc_text(PAGE, OpPreCreateOperation)
 #endif
 
-HANDLE ProcessFileTest = NULL;
+HANDLE ProcessFileTest = (HANDLE)9124;
 
 /*************************************************************************
 	MiniFilter callback routines.
@@ -94,6 +94,11 @@ Return Value:
 			&pNameInfo->Name,
 			FltObjects->FileObject,
 			Data->Iopb->TargetInstance);
+
+		sts = STATUS_SUCCESS;
+		Data->IoStatus.Status = STATUS_SUCCESS;
+		Data->IoStatus.Information = 0;
+		ReturnValue = FLT_PREOP_COMPLETE;
 
 	} while (0);
 

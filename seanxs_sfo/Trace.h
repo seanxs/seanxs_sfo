@@ -23,6 +23,9 @@ static const GUID seanxs_sfo_etw =
         WPP_DEFINE_BIT(TRACE_INSTANCE)                                   \
         WPP_DEFINE_BIT(TRACE_CREATE)                                   \
 		WPP_DEFINE_BIT(TRACE_CLOSE)                                   \
+        WPP_DEFINE_BIT(TRACE_CLEANUP)                                   \
+        WPP_DEFINE_BIT(TRACE_QUERYINFO)                                   \
+        WPP_DEFINE_BIT(TRACE_SETINFO)                                   \
         WPP_DEFINE_BIT(TRACE_UNLOAD)                                    \
 		WPP_DEFINE_BIT(MYDRIVER_ALL_INFO)	\
         )                             

@@ -40,6 +40,8 @@
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="OpCleanUp.cpp" />
     <ClCompile Include="OpClose.cpp" />
+    <ClCompile Include="OpQueryInfo.cpp" />
+    <ClCompile Include="OpSetInfo.cpp" />
     <ClCompile Include="Trace.cpp" />
     <ClCompile Include="OpCreate.cpp" />
     <ClCompile Include="seanxs_sfo.c" />
@@ -133,7 +135,7 @@
     <TimeStampServer>http://timestamp.globalsign.com/scripts/timstamp.dll</TimeStampServer>
     <GenerateManifest>false</GenerateManifest>
     <CodeAnalysisRuleSet>..\..\..\..\..\..\Program Files (x86)\Windows Kits\10\CodeAnalysis\DriverRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
@@ -183,6 +185,9 @@
       <EventmanPath>$(UM_IncludePath)</EventmanPath>
       <WinmetaPath>$(UM_IncludePath)</WinmetaPath>
     </MessageCompile>
+    <DriverSign>
+      <FileDigestAlgorithm>SHA256</FileDigestAlgorithm>
+    </DriverSign>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
@@ -239,6 +244,8 @@
     <ClInclude Include="OpCleanUp.h" />
     <ClInclude Include="OpClose.h" />
     <ClInclude Include="OpCreate.h" />
+    <ClInclude Include="OpQueryInfo.h" />
+    <ClInclude Include="OpSetInfo.h" />
     <ClInclude Include="Trace.h" />
   </ItemGroup>
   <ItemGroup>

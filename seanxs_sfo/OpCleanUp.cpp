@@ -38,7 +38,7 @@ OpPreCleanUpOperation(
 			break;
 		}
 
-		sts = GetParsedNameInfo(Data, &pNameInfo);
+		/*sts = GetParsedNameInfo(Data, &pNameInfo);
 		if (!NT_SUCCESS(sts))
 		{
 			TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLOSE,
@@ -53,11 +53,19 @@ OpPreCleanUpOperation(
 			break;
 		}
 
-		TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLOSE,
+		TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLEANUP,
 			"%!FILE!,%!FUNC!,%!LINE! => File Name : %wZ, TargetFileObject : %p, TargetInstance : %p\n",
 			&pNameInfo->Name,
 			FltObjects->FileObject,
+			Data->Iopb->TargetInstance);*/
+
+		TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CLEANUP,
+			"%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p\n",
+			FltObjects->FileObject,
 			Data->Iopb->TargetInstance);
+
+		sts = STATUS_SUCCESS;
+		ReturnValue = FLT_PREOP_COMPLETE;
 
 		ReturnValue = FLT_PREOP_SUCCESS_WITH_CALLBACK;
 	} while (0);

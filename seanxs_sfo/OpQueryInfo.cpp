@@ -54,10 +54,40 @@ OpPreQueryInfoOperation(
 			&pNameInfo->Name,
 			FltObjects->FileObject,
 			Data->Iopb->TargetInstance);*/
-		TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_QUERYINFO,
-			"%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p\n",
-			FltObjects->FileObject,
-			Data->Iopb->TargetInstance);
+		switch (Data->Iopb->Parameters.QueryFileInformation.FileInformationClass)
+		{
+			case FileNameInformation:
+			{
+				PFILE_NAME_INFORMATION pFileNameInfo = NULL;
+
+				pFileNameInfo = (PFILE_NAME_INFORMATION)Data->Iopb->Parameters.QueryFileInformation.InfoBuffer;
+				pFileNameInfo->FileNameLength = 0x4E;
+				RtlCopyMemory(pFileNameInfo->FileName, L"\\seanxs_sfo_redirectout\\test\\abcd.txt", 0x4A);
+				Data->IoStatus.Information = 0x4E;
+				Data->IoStatus.Status = STATUS_SUCCESS;
+
+				TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_QUERYINFO,
+					"%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p, FileNameInformation : %ws\n",
+					FltObjects->FileObject,
+					Data->Iopb->TargetInstance,
+					L"\\seanxs_sfo_redirectout\\test\\abcd.txt");
+
+				break;
+			}
+			default:
+			{
+				TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_QUERYINFO,
+					"%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p, FileInformationClass : %d\n",
+					FltObjects->FileObject,
+					Data->Iopb->TargetInstance,
+					Data->Iopb->Parameters.QueryFileInformation.FileInformationClass);
+
+				Data->IoStatus.Information = 0;
+				Data->IoStatus.Status = STATUS_NOT_SUPPORTED;
+
+				break;
+			}
+		}
 
 		ReturnValue = FLT_PREOP_COMPLETE;
 		sts = STATUS_SUCCESS;

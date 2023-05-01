@@ -15,11 +15,13 @@ Environment:
 --*/
 
 #include "Common.h"
-
+#include "extern_def.h"
 #include "Instance.h"
 #include "OpCreate.h"
 #include "OpClose.h"
 #include "OpCleanUp.h"
+#include "OpQueryInfo.h"
+#include "OpSetInfo.h"
 
 #include "Trace.h"
 #include "seanxs_sfo.tmh"
@@ -67,6 +69,20 @@ seanxssfoPreOperationNoPostOperation (
     _Flt_CompletionContext_Outptr_ PVOID *CompletionContext
     );
 
+FLT_PREOP_CALLBACK_STATUS
+seanxssfoPreOperation(
+    _Inout_ PFLT_CALLBACK_DATA Data,
+    _In_ PCFLT_RELATED_OBJECTS FltObjects,
+    _Flt_CompletionContext_Outptr_ PVOID* CompletionContext
+);
+
+FLT_POSTOP_CALLBACK_STATUS
+seanxssfoPostOperation(
+    _Inout_ PFLT_CALLBACK_DATA Data,
+    _In_ PCFLT_RELATED_OBJECTS FltObjects,
+    _In_opt_ PVOID CompletionContext,
+    _In_ FLT_POST_OPERATION_FLAGS Flags
+);
 
 EXTERN_C_END
 
@@ -77,6 +93,7 @@ EXTERN_C_END
 #ifdef ALLOC_PRAGMA
 #pragma alloc_text(INIT, DriverEntry)
 #pragma alloc_text(PAGE, seanxssfoUnload)
+#pragma alloc_text(PAGE, seanxssfoPreOperation)
 #endif
 
 //
@@ -100,7 +117,7 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
 	  OpPreCleanUpOperation,
 	  OpPostCleanUpOperation },
 
-#if 0 // TODO - List all of the requests to filter.
+#if 1 // TODO - List all of the requests to filter.
 
     { IRP_MJ_CREATE_NAMED_PIPE,
       0,
@@ -119,12 +136,12 @@ CONST FLT_OPERATION_REGISTRATION Callbacks[] = {
 
     { IRP_MJ_QUERY_INFORMATION,
       0,
-      seanxssfoPreOperation,
+      OpPreQueryInfoOperation,
       seanxssfoPostOperation },
 
     { IRP_MJ_SET_INFORMATION,
       0,
-      seanxssfoPreOperation,
+      OpPreSetInfoOperation,
       seanxssfoPostOperation },
 
     { IRP_MJ_QUERY_EA,
@@ -607,4 +624,78 @@ Return Value:
               ((iopb->MajorFunction == IRP_MJ_DIRECTORY_CONTROL) &&
                (iopb->MinorFunction == IRP_MN_NOTIFY_CHANGE_DIRECTORY))
              );
+}
+
+FLT_PREOP_CALLBACK_STATUS
+seanxssfoPreOperation(
+    _Inout_ PFLT_CALLBACK_DATA Data,
+    _In_ PCFLT_RELATED_OBJECTS FltObjects,
+    _Flt_CompletionContext_Outptr_ PVOID* CompletionContext
+)
+{
+    FLT_PREOP_CALLBACK_STATUS ReturnValue = FLT_PREOP_SUCCESS_NO_CALLBACK;
+    NTSTATUS sts = STATUS_UNSUCCESSFUL;
+    PFLT_FILE_NAME_INFORMATION pNameInfo = NULL;
+
+    PAGED_CODE();
+
+    *CompletionContext = NULL;
+
+    do
+    {
+        if (FltObjects->Instance == DestInstance)
+        {
+            sts = STATUS_SUCCESS;
+            break;
+        }
+
+        if (ProcessFileTest != PsGetCurrentProcessId())
+        {
+            sts = STATUS_SUCCESS;
+            break;
+        }
+
+        TraceEvents(TRACE_LEVEL_INFORMATION, TRACE_CREATE,
+            "%!FILE!,%!FUNC!,%!LINE! => TargetFileObject : %p, TargetInstance : %p, MajorFunction : %d, MinorFunction : %d\n",
+            FltObjects->FileObject,
+            Data->Iopb->TargetInstance,
+            Data->Iopb->MajorFunction,
+            Data->Iopb->MinorFunction);
+
+        sts = STATUS_SUCCESS;
+        ReturnValue = FLT_PREOP_COMPLETE;
+
+    } while (0);
+
+    if (!NT_SUCCESS(sts))
+    {
+        KdPrint((__FUNCTION__"=> error code : 0x%08X\n", sts));
+        ReturnValue = FLT_PREOP_COMPLETE;
+    }
+
+    if (pNameInfo)
+    {
+        FltReleaseFileNameInformation(pNameInfo);
+    }
+
+    return ReturnValue;
+}
+
+FLT_POSTOP_CALLBACK_STATUS
+seanxssfoPostOperation(
+    _Inout_ PFLT_CALLBACK_DATA Data,
+    _In_ PCFLT_RELATED_OBJECTS FltObjects,
+    _In_opt_ PVOID CompletionContext,
+    _In_ FLT_POST_OPERATION_FLAGS Flags
+)
+{
+    UNREFERENCED_PARAMETER(Data);
+    UNREFERENCED_PARAMETER(FltObjects);
+    UNREFERENCED_PARAMETER(CompletionContext);
+    UNREFERENCED_PARAMETER(Flags);
+
+    PT_DBG_PRINT(PTDBG_TRACE_ROUTINES,
+        ("seanxssfo!seanxssfoPostOperation: Entered\n"));
+
+    return FLT_POSTOP_FINISHED_PROCESSING;
 }
